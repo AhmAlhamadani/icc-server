@@ -6,7 +6,22 @@ const router = Router();
 router.get("/", async (req, res) => {
   try {
     const user = await pool.query(
-      "SELECT * FROM users WHERE user_id = $1",
+      `SELECT 
+        user_id,
+        email,
+        auth_provider,
+        first_name,
+        last_name,
+        phone_number,
+        user_role,
+        profile_picture_url,
+        user_tier,
+        lang_preference,
+        points,
+        notification_preference,
+        created_at,
+        updated_at
+      FROM users WHERE user_id = $1`,
       [req.user.userId] 
     ); 
     

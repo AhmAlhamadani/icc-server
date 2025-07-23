@@ -18,6 +18,9 @@ import deleteUserRoute from './routes/admin/userManagement/deleteUser.js';
 import updateRoleRoute from './routes/admin/userManagement/updateRole.js';
 import updateTierRoute from './routes/admin/userManagement/updateTier.js';
 import updatePointsRoute from './routes/admin/userManagement/updatePoints.js';
+// Admin Category Management routes
+import createCategoryRoute from './routes/admin/categories/createCategory.js';
+import createSubCategoryRoute from './routes/admin/categories/createSubCategory.js';
 
 const app = express();
 
@@ -51,6 +54,11 @@ app.use('/api/admin/user-management/delete-user', authorizationAdmin, deleteUser
 app.use('/api/admin/user-management/update-role', authorizationAdmin, updateRoleRoute);
 app.use('/api/admin/user-management/update-tier', authorizationAdmin, updateTierRoute);
 app.use('/api/admin/user-management/update-points', authorizationAdmin, updatePointsRoute);
+
+// Category Management
+app.use('/api/admin/categories/create-category', authorizationAdmin, createCategoryRoute);
+app.use('/api/admin/categories/create-sub-category', authorizationAdmin, createSubCategoryRoute);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

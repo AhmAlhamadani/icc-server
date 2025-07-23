@@ -1,10 +1,9 @@
 import { Router } from 'express';
 import pool from '../../../db.js';
-import authorizationAdmin from '../../../middleware/authorizationAdmin.js';
 
 const router = Router();
 
-router.put('/:id', authorizationAdmin, async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { tier } = req.body;
 
