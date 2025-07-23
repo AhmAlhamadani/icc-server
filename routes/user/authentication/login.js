@@ -2,9 +2,9 @@ import { Router } from "express";
 import bcrypt from 'bcrypt';
 
 //file imports
-import pool from '../../db.js';
-import generateJWT from "../../utils/jwtGenerator.js";
-import validInfo from '../../middleware/validinfo.js';
+import pool from '../../../db.js';
+import generateJWT from "../../../utils/jwtGenerator.js";
+import validInfo from '../../../middleware/validinfo.js';
 
 // Intialize middleware
 const router = Router();

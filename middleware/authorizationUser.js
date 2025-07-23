@@ -15,7 +15,8 @@ export default (req, res, next) => {
 
         const payload = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
-        req.user = payload; // Attach user info to request object
+        req.user = payload; 
+        next(); 
 
     } catch (error) {
         console.error("Authorization error:", error);

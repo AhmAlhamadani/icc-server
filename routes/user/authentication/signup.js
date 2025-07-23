@@ -2,9 +2,9 @@ import { Router } from "express";
 import bcrypt from 'bcrypt';
 
 //file imports
-import pool from '../../db.js';
-import generateJWT from "../../utils/jwtGenerator.js";
-import validInfo from '../../middleware/validinfo.js';
+import pool from '../../../db.js';
+import generateJWT from "../../../utils/jwtGenerator.js";
+import validInfo from '../../../middleware/validinfo.js';
 
 // Intialize middleware
 const router = Router();
@@ -34,8 +34,8 @@ router.post('/', validInfo, async (req, res) => {
 
     // generate a token (JWT)
     const token = generateJWT(
-        newUser.rows[0].user_id,
-        newUser.rows[0].user_role
+      newUser.rows[0].user_id,
+      newUser.rows[0].user_role
     );
 
     res.json({ token });
@@ -45,5 +45,7 @@ router.post('/', validInfo, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+router.get
 
 export default router;

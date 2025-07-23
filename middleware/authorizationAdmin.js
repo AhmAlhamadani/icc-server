@@ -13,7 +13,7 @@ export default (req, res, next) => {
 
     const payload = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
-    if (payload.user_role !== 'admin') {
+    if (payload.userRole !== 'admin') {
       return res.status(403).json({ message: "Forbidden: Admin access required" });
     }
 
