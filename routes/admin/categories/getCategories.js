@@ -3,7 +3,7 @@ import pool from '../../../db.js';
 
 const router = Router();
 
-// GET /admin/categories - Get all categories
+
 router.get('/', async (req, res) => {
   try {
     const categories = await pool.query('SELECT * FROM categories ORDER BY category_id ASC');
