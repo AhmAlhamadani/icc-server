@@ -47,15 +47,30 @@ router.get("/:id", async (req, res) => {
 
     const orders = ordersResult.rows;
 
-    // 4. For each order, get order items
-    // (Alternatively, get all order items for user's orders at once)
-    let orderItems = [];
+    // 4. Get order items for all orders at once
+    let enrichedOrders = [];
     if (orders.length > 0) {
       const orderIds = orders.map(o => o.order_id);
       const orderItemsResult = await pool.query(
-        `SELECT * FROM order_items WHERE order_id = ANY($1::uuid[])`, [orderIds]
+        `
+        SELECT 
+          oi.*, 
+          p.product_name, 
+          p.product_picture_url 
+        FROM order_items oi
+        JOIN products p ON oi.product_id = p.product_id
+        WHERE oi.order_id = ANY($1::uuid[])
+        `,
+        [orderIds]
       );
-      orderItems = orderItemsResult.rows;
+
+      const orderItems = orderItemsResult.rows;
+
+      // Group order items under their corresponding order
+      enrichedOrders = orders.map(order => {
+        const items = orderItems.filter(oi => oi.order_id === order.order_id);
+        return { ...order, items };
+      });
     }
 
     // 5. Get cart items
@@ -63,19 +78,18 @@ router.get("/:id", async (req, res) => {
       "SELECT * FROM cart_items WHERE user_id = $1", [id]
     );
 
-    // 6. Get points history (both linked directly to user and orders)
+    // 6. Get points history
     const pointsHistoryResult = await pool.query(
       `SELECT * FROM points_history WHERE user_id = $1 OR order_id IN (
         SELECT order_id FROM orders WHERE user_id = $1
       )`, [id]
     );
 
-    // Compose response
+    // Final response
     res.json({
       user,
       addresses: addressesResult.rows,
-      orders,
-      orderItems,
+      orders: enrichedOrders,
       cartItems: cartItemsResult.rows,
       pointsHistory: pointsHistoryResult.rows,
     });

@@ -31,6 +31,20 @@ import updateCategoryRoute from './routes/admin/categories/updateCategory.js';
 import updateSubCategoryRoute from './routes/admin/categories/updateSubCategory.js';
 // Admin Product Management routes
 import createProductRoute from './routes/admin/products/createProduct.js';
+import getProductsRoute from './routes/admin/products/getProducts.js';
+import getProductRoute from './routes/admin/products/getProduct.js';
+import deleteProductRoute from './routes/admin/products/deleteProduct.js';
+import updateProductRoute from './routes/admin/products/updateProduct.js';
+// Admin Order Management routes
+import getOrderRoute from './routes/admin/order/getOrder.js';
+import getOrdersRoute from './routes/admin/order/getOrders.js';
+import deleteOrderRoute from './routes/admin/order/deleteOrder.js';
+import updateOrderStatusRoute from './routes/admin/order/updateOrderStatus.js';
+// Admin Points-History Management routes
+import getPointsHistoryRoute from './routes/admin/pointsHistory/getPointHistory.js';
+import getPointsHistoryByUserRoute from './routes/admin/pointsHistory/getUserPointsHistory.js';
+
+
 
 const app = express();
 
@@ -78,6 +92,20 @@ app.use('/api/admin/categories/update-sub-category', authorizationAdmin, updateS
 
 // Product Management
 app.use('/api/admin/products/create-product', authorizationAdmin, createProductRoute);
+app.use('/api/admin/products/get-products', authorizationAdmin, getProductsRoute);
+app.use('/api/admin/products/get-product', authorizationAdmin, getProductRoute);
+app.use('/api/admin/products/delete-product', authorizationAdmin, deleteProductRoute);
+app.use('/api/admin/products/update-product', authorizationAdmin, updateProductRoute);
+
+// Order Management
+app.use('/api/admin/orders/get-order', authorizationAdmin, getOrderRoute);
+app.use('/api/admin/orders/delete-order', authorizationAdmin, deleteOrderRoute);
+app.use('/api/admin/orders/update-order-status', authorizationAdmin, updateOrderStatusRoute);
+app.use('/api/admin/orders/get-orders', authorizationAdmin, getOrdersRoute);
+
+// Points History Management
+app.use('/api/admin/points-history/get-points-history', authorizationAdmin, getPointsHistoryRoute);
+app.use('/api/admin/points-history/get-points-history-by-user', authorizationAdmin, getPointsHistoryByUserRoute);
 
 
 const PORT = process.env.PORT || 3000;
